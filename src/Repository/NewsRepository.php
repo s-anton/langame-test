@@ -23,4 +23,14 @@ class NewsRepository
             $manager->getClassMetadata(NewsEntry::class)
         );
     }
+
+    public function getLastRecord(): ?NewsEntry
+    {
+        return $this->entityRepository
+            ->createQueryBuilder('news')
+            ->orderBy('id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
