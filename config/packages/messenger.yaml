@@ -24,5 +24,4 @@ framework:
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
-            'App\Events\Sync\*': sync
-            'App\Events\Async\*': async
+            'App\Events\*': async

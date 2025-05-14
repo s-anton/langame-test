@@ -20,6 +20,20 @@ services:
     working_dir: /app
     restart: unless-stopped
 
+  consumer:
+    build: ./docker/php
+    volumes:
+      - ./:/app
+    working_dir: /app
+    restart: unless-stopped
+    command:
+      - "php"
+      - "bin/console"
+      - "messenger:consume"
+      - "--all"
+      - "--limit=10"
+      - "-vv"
+
   mysql:
     image: mysql:8.4.5
     environment:
