@@ -1,0 +1,37 @@
+version: "3"
+services:
+  nginx:
+    image: nginx
+    environment:
+      - APP_DOMAIN=localhost
+    volumes:
+      - ./docker/nginx:/etc/nginx/templates
+      - ./:/app:ro
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+  php:
+    build: ./docker/php
+    volumes:
+      - ./:/app
+    ports:
+      - "9000"
+    working_dir: /app
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.4.5
+    environment:
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+    restart: unless-stopped
+    ports:
+      - "3306"
+
+  rabbit:
+    image: rabbitmq:3-management
+    ports:
+      - "5672"
