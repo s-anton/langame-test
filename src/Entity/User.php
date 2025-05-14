@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(type: 'smallint', nullable: false)]
+    private int $isVerified = 0;
+
     public function getId(): ?int
     {
         return $this->id;
