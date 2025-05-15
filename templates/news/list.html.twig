@@ -1,9 +1,10 @@
-<table border="1" width="700">
+<table width="800">
     {% for entry in news %}
         <tr>
-                <td>{{ entry.id }}</td>
-                <td>{{ entry.content }}</td>
-                <td><a href="{{ entry.url }}" target="_blank">link</a></td>
+            <td>{{ entry.id }}</td>
+            <td>{{ entry.content }}</td>
+            <td><a href="{{ entry.url }}" target="_blank">link</a></td>
+            <td>{{ entry.publishedAt | date('d F o H:i:s e') }}</td>
         </tr>
     {% endfor %}
 </table>

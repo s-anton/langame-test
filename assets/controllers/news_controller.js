@@ -1,24 +1,13 @@
 import { Controller } from '@hotwired/stimulus'
-import { connectStreamSource, disconnectStreamSource } from "@hotwired/turbo";
 
 export default class extends Controller {
-    static values = { url: String, newsListUrl: String };
+    static values = { newsListUrl: String };
 
     connect() {
         if (document.documentElement.hasAttribute('data-turbo-preview')) {
             return;
         }
         this.load('forward', '2030-01-01');
-
-        this.es = new EventSource(this.urlValue);
-        connectStreamSource(this.es);
-    }
-
-    disconnect() {
-        if (this.es) {
-            this.es.close();
-            disconnectStreamSource(this.es);
-        }
     }
 
     load(direction, lastPublishedAt) {

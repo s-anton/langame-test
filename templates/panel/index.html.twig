@@ -5,11 +5,8 @@
 {% block body %}
     <h1>Users</h1>
 
-    <div
-            data-controller="panel"
-            data-panel-url-value="{{ mercure('http://' ~ appDomain ~ '/users/{id}') }}"
-    >
-        <table border="1" width="500">
+    <div>
+        <table width="500">
             {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
