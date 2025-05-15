@@ -16,3 +16,7 @@ table td {
     display: flex;
     justify-content: space-between;
 }
+
+.search {
+    margin-bottom: 10px;
+}

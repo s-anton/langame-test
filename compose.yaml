@@ -17,8 +17,6 @@ services:
     build: ./docker/php
     volumes:
       - ./:/app
-    ports:
-      - "9000"
     working_dir: /app
     depends_on:
       - mysql
@@ -61,13 +59,9 @@ services:
       MYSQL_DATABASE: $MYSQL_DATABASE
       MYSQL_RANDOM_ROOT_PASSWORD: yes
     restart: unless-stopped
-    ports:
-      - "3306"
 
   rabbit:
     image: rabbitmq:3-management
-    ports:
-      - "5672"
 
 ###> symfony/mercure-bundle ###
   mercure:
