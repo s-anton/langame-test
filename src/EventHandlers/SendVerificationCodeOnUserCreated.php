@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\EventHandlers;
 
-use App\Entity\ConfirmationCode;
 use App\Events\UserCreated;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -21,7 +20,6 @@ readonly class SendVerificationCodeOnUserCreated
         if ($userCreated->userId === null) {
             return;
         }
-
 
         $this->entityManager->flush();
     }
