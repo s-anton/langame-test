@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace App\EventHandlers;
 
 use App\Events\NewsEntryCreated;
+use App\Mercure\Message\NewsEntryCreatedMessage;
 use App\Repository\NewsRepository;
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
+use App\Service\MercurePublisherService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 class SendNotificationsOnNewsEntryCreated
 {
     public function __construct(
-        private HubInterface $hub,
         private NewsRepository $newsRepository,
-        private string $appDomain
+        private MercurePublisherService $mercurePublisherService,
     ) {
     }
 
@@ -27,15 +26,7 @@ class SendNotificationsOnNewsEntryCreated
             return;
         }
 
-        $update = new Update(
-            sprintf('http://%s/news/%d', $this->appDomain, $newsEntry->getId()),
-            json_encode([
-                'id' => $newsEntry->getId(),
-                'content' => $newsEntry->getContent(),
-                'url' => $newsEntry->getUrl(),
-            ])
-        );
-        $this->hub->publish($update);
+        $message = new NewsEntryCreatedMessage($newsEntry->getId(), $newsEntry->getContent(), $newsEntry->getUrl());
+        $this->mercurePublisherService->publish($message);
     }
-
 }

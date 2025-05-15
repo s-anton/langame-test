@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\EventHandlers;
 
-use App\Events\UserVerified;
-use App\Mercure\Message\UserVerifiedMessage;
+use App\Events\UserCreated;
+use App\Mercure\Message\UserCreatedMessage;
 use App\Repository\UserRepository;
 use App\Service\MercurePublisherService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class SendNotificationOnUserVerified
+class SendNotificationOnUserCreated
 {
     public function __construct(
         private UserRepository $userRepository,
@@ -19,14 +19,19 @@ class SendNotificationOnUserVerified
     ) {
     }
 
-    public function __invoke(UserVerified $userVerified): void
+    public function __invoke(UserCreated $userCreated): void
     {
-        $user = $this->userRepository->find($userVerified->userId);
+        if ($userCreated->userId === null) {
+            return;
+        }
+
+        $user = $this->userRepository->find($userCreated->userId);
         if ($user === null) {
             return;
         }
 
-        $message = new UserVerifiedMessage($user->getId(), $user->getUsername());
+        $message = new UserCreatedMessage($user->getId(), $user->getUsername());
         $this->mercurePublisherService->publish($message);
     }
+
 }

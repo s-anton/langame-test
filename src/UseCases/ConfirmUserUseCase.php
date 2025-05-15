@@ -39,7 +39,7 @@ class ConfirmUserUseCase
         $this->entityManager->remove($confirmationCode);
         $this->entityManager->flush();
 
-        $this->messageBus->dispatch(new UserVerified($user->getId()));
+        $this->messageBus->dispatch(new UserVerified((int) $user->getId()));
 
         $this->security->login($user);
 
