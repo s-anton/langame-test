@@ -28,7 +28,7 @@ class SendNotificationsOnNewsEntryCreated
         }
 
         $update = new Update(
-            sprintf('http://%s/news', $this->appDomain),
+            sprintf('http://%s/news/%d', $this->appDomain, $newsEntry->getId()),
             json_encode([
                 'id' => $newsEntry->getId(),
                 'content' => $newsEntry->getContent(),

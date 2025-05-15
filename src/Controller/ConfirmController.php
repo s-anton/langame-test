@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
-class PanelController extends AbstractController
+class ConfirmController extends AbstractController
 {
-    #[Route('/panel', name: 'panel')]
-    public function panel(UserRepository $userRepository): Response
+    #[Route('/confirm', name: 'confirm')]
+    public function confirm(): Response
     {
-        return $this->render('panel/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
+
     }
 }
