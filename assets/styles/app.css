@@ -15,8 +15,19 @@ table td {
 .breadcrumbs {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .search {
     margin-bottom: 10px;
+}
+
+div.alert {
+    font-size: 20px;
+    background-color: #d9ffcb;
+    display: inline-flex;
+    justify-content: center;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
 }
