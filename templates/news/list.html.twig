@@ -1,0 +1,30 @@
+<table border="1" width="700">
+    {% for entry in news %}
+        <tr>
+                <td>{{ entry.id }}</td>
+                <td>{{ entry.content }}</td>
+                <td><a href="{{ entry.url }}" target="_blank">link</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% if news is not empty %}
+    {% if (news | first).publishedAt < minMaxPublishedAt.max %}
+        <button
+                data-action="news#loadNews"
+                data-news-last-published-at-param="{{ (news | first).publishedAt }}"
+                data-news-direction-param="back"
+        >
+            back
+        </button>
+    {% endif %}
+    {% if (news | last).publishedAt > minMaxPublishedAt.min %}
+        <button
+                data-action="news#loadNews"
+                data-news-last-published-at-param="{{ (news | last).publishedAt }}"
+                data-news-direction-param="forward"
+        >
+            forward
+        </button>
+    {% endif %}
+{% endif %}

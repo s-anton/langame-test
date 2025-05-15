@@ -6,11 +6,9 @@
     <h1>News</h1>
 
     <div
-            data-controller="news"
-            data-panel-url-value="{{ mercure('http://' ~ appDomain ~ '/news/{id}') }}"
+        data-controller="news"
+        data-news-url-value="{{ mercure('http://' ~ appDomain ~ '/news/{id}') }}"
+        data-news-news-list-url-value="{{ path('news_list') }}"
     >
-        <table border="1" width="700">
-
-        </table>
     </div>
 {% endblock %}

@@ -37,7 +37,7 @@ class BulkCreateNewsEntriesUseCase
             }
 
             $entry = new NewsEntry(
-                content: $data->title,
+                content: mb_substr($data->title, 0, 255),
                 url: $data->url,
                 publishedAt: date_create($data->pubDate)->format(\DateTimeInterface::ATOM),
             );

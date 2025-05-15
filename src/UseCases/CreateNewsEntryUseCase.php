@@ -22,7 +22,7 @@ class CreateNewsEntryUseCase
         string $url,
         string $publishedAt
     ): NewsEntry {
-        $entry = new NewsEntry($content, $url, $publishedAt);
+        $entry = new NewsEntry(mb_substr($content, 0, 255), $url, $publishedAt);
 
         $this->entityManager->persist($entry);
         $this->entityManager->flush();
