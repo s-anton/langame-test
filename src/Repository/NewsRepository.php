@@ -33,4 +33,9 @@ class NewsRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getById(int $id): ?NewsEntry
+    {
+        return $this->entityRepository->find($id);
+    }
 }

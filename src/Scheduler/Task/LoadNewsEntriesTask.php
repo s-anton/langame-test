@@ -8,7 +8,6 @@ use App\Entity\NewsEntry;
 use App\Repository\NewsRepository;
 use App\Service\HabrRssService;
 use App\UseCases\BulkCreateNewsEntriesUseCase;
-use jcobhams\NewsApi\NewsApi;
 use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
 
 #[AsPeriodicTask(frequency: '60 seconds', jitter: 6)]
