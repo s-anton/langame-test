@@ -3,25 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Events\UserCreated;
 use App\Form\RegistrationForm;
-use Doctrine\ORM\EntityManagerInterface;
+use App\UseCases\Auth\RegisterUserUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(
-        Request $request,
-        UserPasswordHasherInterface $userPasswordHasher,
-        EntityManagerInterface $entityManager,
-        MessageBusInterface $messageBus,
-    ): Response {
+    public function register(Request $request, RegisterUserUseCase $registerUserUseCase): Response
+    {
         $user = new User();
         $form = $this->createForm(RegistrationForm::class, $user);
         $form->handleRequest($request);
@@ -29,16 +22,12 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
+            /** @var string $username */
+            $username = $form->get('username')->getData();
 
-            // encode the plain password
-            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            $registerUserUseCase->execute($username, $plainPassword);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $messageBus->dispatch(new UserCreated($user->getId()));
-
-            return $this->redirectToRoute('panel');
+            return $this->redirectToRoute('confirm');
         }
 
         return $this->render('registration/register.html.twig', [
