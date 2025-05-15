@@ -28,7 +28,7 @@ class NewsRepository
     {
         return $this->entityRepository
             ->createQueryBuilder('news')
-            ->orderBy('id', 'DESC')
+            ->orderBy('news.publishedAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

@@ -29,6 +29,9 @@ final class Version20250514180731 extends AbstractMigration
                 PRIMARY KEY(id))
                 DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
+
+        $this->addSql('CREATE INDEX news_published_at ON news (published_at)');
+        $this->addSql('CREATE UNIQUE INDEX news_url USING HASH ON news (url)');
     }
 
     public function down(Schema $schema): void

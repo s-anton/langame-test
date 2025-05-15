@@ -24,7 +24,9 @@ class NewsEntry
     private string $content;
     #[Column(type: 'string', length: 255)] // может быть длиннее, да и ладно, для теста пойдет
     private string $url;
+    #[Column(type: 'string', length: 50)]
     private string $publishedAt;
+    #[Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $createdAt;
 
     public function __construct(

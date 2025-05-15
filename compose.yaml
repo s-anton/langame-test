@@ -30,7 +30,21 @@ services:
       - "php"
       - "bin/console"
       - "messenger:consume"
-      - "--all"
+      - "async"
+      - "--limit=10"
+      - "-vv"
+
+  scheduler:
+    build: ./docker/php
+    volumes:
+      - ./:/app
+    working_dir: /app
+    restart: unless-stopped
+    command:
+      - "php"
+      - "bin/console"
+      - "messenger:consume"
+      - "scheduler_default"
       - "--limit=10"
       - "-vv"
 
