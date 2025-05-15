@@ -53,6 +53,10 @@ class NewsRepository
             $query->where('news.publishedAt > :publishedAt')->orderBy('news.publishedAt', 'ASC');
         }
 
+        if (!empty($term)) {
+            $query->andWhere('news.content LIKE :term')->setParameter('term', '%' . $term . '%');
+        }
+
         $result = $query
             ->setParameter('publishedAt', $lastPublishedAt)
             ->setMaxResults(10)
@@ -66,12 +70,16 @@ class NewsRepository
         return $result;
     }
 
-    public function getMinMaxPublishedAt(): array
+    public function getMinMaxPublishedAt(string $term): array
     {
-        return $this->entityRepository
+        $query = $this->entityRepository
             ->createQueryBuilder('news')
-            ->select(['MAX(news.publishedAt) as max', 'MIN(news.publishedAt) as min'])
-            ->getQuery()
-            ->getSingleResult();
+            ->select(['MAX(news.publishedAt) as max', 'MIN(news.publishedAt) as min']);
+
+        if (!empty($term)) {
+            $query->andWhere('news.content LIKE :term')->setParameter('term', '%' . $term . '%');
+        }
+
+        return $query->getQuery()->getSingleResult();
     }
 }

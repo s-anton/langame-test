@@ -31,8 +31,9 @@ class NewsController extends AbstractController
         $direction = $request->query->getString('direction', 'forward');
 
         return $this->render('news/list.html.twig', [
+            'query' => $query,
             'news' => $newsRepository->iterateUsingCursor($lastPublishedAt, $query, $direction),
-            'minMaxPublishedAt' => $newsRepository->getMinMaxPublishedAt(),
+            'minMaxPublishedAt' => $newsRepository->getMinMaxPublishedAt($query),
         ]);
     }
 }
