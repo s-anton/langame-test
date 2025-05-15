@@ -114,4 +114,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->isVerified;
     }
+
+    public function verify(): void
+    {
+        $this->isVerified = 1;
+    }
 }

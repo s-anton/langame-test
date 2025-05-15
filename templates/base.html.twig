@@ -19,14 +19,17 @@
                     <a href="{{ path('news') }}">News</a>
                 {% endif %}
             </div>
-            {% if app.user %}
-                <div class="mb-3">
-                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-                </div>
-            {% else %}
-                <a href="{{ path('app_login') }}">login</a>
-                <a href="{{ path('app_register') }}">register</a>
-            {% endif %}
+            <div>
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% else %}
+                    <a href="{{ path('app_login') }}">login</a>
+                    <a href="{{ path('app_register') }}">register</a>
+                    <a href="{{ path('confirm') }}">confirm</a>
+                {% endif %}
+            </div>
         </div>
         {% block body %}{% endblock %}
     </body>

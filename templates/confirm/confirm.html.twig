@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation{% endblock %}
+
+{% block body %}
+    {% if error is not null%}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <h1>Confirm</h1>
+
+    <form method="post" data-turbo="false">
+        <input type="text" name="code" placeholder="confirmation code" minlength="6">
+        <button type="submit">confirm</button>
+    </form>
+{% endblock %}

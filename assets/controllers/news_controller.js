@@ -5,6 +5,9 @@ export default class extends Controller {
     static values = { url: String, newsListUrl: String };
 
     connect() {
+        if (document.documentElement.hasAttribute('data-turbo-preview')) {
+            return;
+        }
         this.load('forward', '2030-01-01');
 
         this.es = new EventSource(this.urlValue);
@@ -12,8 +15,10 @@ export default class extends Controller {
     }
 
     disconnect() {
-        this.es.close();
-        disconnectStreamSource(this.es);
+        if (this.es) {
+            this.es.close();
+            disconnectStreamSource(this.es);
+        }
     }
 
     load(direction, lastPublishedAt) {
@@ -23,7 +28,6 @@ export default class extends Controller {
     }
 
     loadNews({params: {direction, lastPublishedAt}}) {
-        console.log(direction, lastPublishedAt);
         this.load(direction, lastPublishedAt);
     }
 }

@@ -31,4 +31,9 @@ class ConfirmationCodeRepository
     {
         return $this->entityRepository->findAll();
     }
+
+    public function findByCode(string $code): ?ConfirmationCode
+    {
+        return $this->entityRepository->findOneBy(['code' => $code]);
+    }
 }
