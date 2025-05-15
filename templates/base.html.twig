@@ -15,8 +15,8 @@
         <div class="breadcrumbs">
             <div>
                 {% if app.user %}
-                    <a href="{{ path('panel') }}">Users</a>
-                    <a href="{{ path('news') }}">News</a>
+                    <a href="{{ path('panel') }}" data-turbo="false">Users</a>
+                    <a href="{{ path('news') }}" data-turbo="false">News</a>
                 {% endif %}
             </div>
             <div>
