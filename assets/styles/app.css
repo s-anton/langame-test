@@ -1,3 +1,8 @@
 body {
     background-color: skyblue;
 }
+
+.breadcrumbs {
+    display: flex;
+    justify-content: space-between;
+}

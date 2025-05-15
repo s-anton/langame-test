@@ -12,11 +12,22 @@
         {% endblock %}
     </head>
     <body>
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        <div class="breadcrumbs">
+            <div>
+                {% if app.user %}
+                    <a href="{{ path('panel') }}">Users</a>
+                    <a href="{{ path('news') }}">News</a>
+                {% endif %}
             </div>
-        {% endif %}
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% else %}
+                <a href="{{ path('app_login') }}">login</a>
+                <a href="{{ path('app_register') }}">register</a>
+            {% endif %}
+        </div>
         {% block body %}{% endblock %}
     </body>
 </html>

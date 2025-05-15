@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block body %}
+    <h1>News</h1>
+
+    <div
+            data-controller="news"
+            data-panel-url-value="{{ mercure('http://' ~ appDomain ~ '/news/{id}') }}"
+    >
+        <table border="1" width="700">
+
+        </table>
+    </div>
+{% endblock %}
