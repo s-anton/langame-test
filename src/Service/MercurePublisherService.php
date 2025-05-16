@@ -19,7 +19,7 @@ class MercurePublisherService
     public function publish(MessageInterface $message): void
     {
         $update = new Update(
-            sprintf('http://%s/update', $this->appDomain),
+            sprintf('https://%s/update', $this->appDomain),
             json_encode([
                 'type' => $message->getType(),
                 'data' => $message
