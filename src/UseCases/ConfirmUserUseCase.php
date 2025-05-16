@@ -24,7 +24,7 @@ class ConfirmUserUseCase
 
     public function execute(string $code): bool
     {
-        $confirmationCode = $this->confirmationCodeRepository->findByCode($code);
+        $confirmationCode = $this->confirmationCodeRepository->findOneByCode($code);
         if ($confirmationCode === null) {
             return false;
         }

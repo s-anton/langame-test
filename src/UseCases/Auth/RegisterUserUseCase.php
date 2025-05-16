@@ -7,6 +7,7 @@ namespace App\UseCases\Auth;
 use App\Entity\ConfirmationCode;
 use App\Entity\User;
 use App\Events\UserCreated;
+use App\Repository\ConfirmationCodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -16,7 +17,8 @@ class RegisterUserUseCase
     public function __construct(
         private MessageBusInterface $messageBus,
         private EntityManagerInterface $entityManager,
-        private UserPasswordHasherInterface $passwordHasher
+        private UserPasswordHasherInterface $passwordHasher,
+        private ConfirmationCodeRepository $confirmationCodeRepository,
     ) {
     }
 
