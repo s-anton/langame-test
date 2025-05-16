@@ -6,6 +6,7 @@ services:
       - APP_DOMAIN=localhost
     volumes:
       - ./docker/nginx:/etc/nginx/templates
+      - ./docker/certbot/www:/var/www/certbot:ro
       - ./:/app:ro
     ports:
       - "80:80"
