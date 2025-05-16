@@ -34,4 +34,9 @@ class ChatsRepository
             ->getQuery()
             ->toIterable();
     }
+
+    public function findById(string $id): ?Chat
+    {
+        return $this->entityRepository->find($id);
+    }
 }
