@@ -33,6 +33,7 @@ class HandleTelegramWebhookDataUseCase
         $chatId = $decoded['message']['chat']['id'] ?? null;
         if ($chatId === null) {
             $this->logger->warning('Unknown structure of data', ['data' => $data]);
+            return;
         }
 
         if ($this->chatRepository->findById(strval($chatId)) instanceof Chat) {

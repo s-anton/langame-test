@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\UseCases;
 
+use App\Entity\User;
 use App\Events\UserVerified;
 use App\Repository\ConfirmationCodeRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class ConfirmUserUseCase
@@ -17,21 +17,20 @@ class ConfirmUserUseCase
         private ConfirmationCodeRepository $confirmationCodeRepository,
         private UserRepository $userRepository,
         private EntityManagerInterface $entityManager,
-        private Security $security,
         private MessageBusInterface $messageBus,
     ) {
     }
 
-    public function execute(string $code): bool
+    public function execute(string $code): ?User
     {
         $confirmationCode = $this->confirmationCodeRepository->findOneByCode($code);
         if ($confirmationCode === null) {
-            return false;
+            return null;
         }
 
         $user = $this->userRepository->find($confirmationCode->getUserId());
         if ($user === null) {
-            return false;
+            return null;
         }
 
         $user->verify();
@@ -41,8 +40,6 @@ class ConfirmUserUseCase
 
         $this->messageBus->dispatch(new UserVerified((int) $user->getId()));
 
-        $this->security->login($user);
-
-        return true;
+        return $user;
     }
 }
