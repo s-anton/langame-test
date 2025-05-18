@@ -82,4 +82,9 @@ class NewsRepository
 
         return $query->getQuery()->getSingleResult();
     }
+
+    public function urlExists(string $url): bool
+    {
+        return $this->entityRepository->findOneBy(['url' => $url]) instanceof NewsEntry;
+    }
 }

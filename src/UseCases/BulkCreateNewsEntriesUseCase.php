@@ -7,6 +7,7 @@ namespace App\UseCases;
 use App\Dto\HabrItemDto;
 use App\Entity\NewsEntry;
 use App\Events\NewsEntryCreated;
+use App\Repository\NewsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -15,7 +16,8 @@ class BulkCreateNewsEntriesUseCase
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private MessageBusInterface $messageBus
+        private MessageBusInterface $messageBus,
+        private NewsRepository $newsRepository,
     ) {
     }
 
@@ -34,6 +36,10 @@ class BulkCreateNewsEntriesUseCase
         foreach ($datas as $data) {
             if ($data->url === $lastUrl) {
                 break;
+            }
+
+            if ($this->newsRepository->urlExists($data->url)) {
+                return;
             }
 
             $entry = new NewsEntry(
