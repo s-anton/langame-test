@@ -27,7 +27,7 @@ readonly class LoadNewsEntriesTask
 
         $this->bulkCreateNewsEntriesUseCase->execute(
             $items,
-            $lastNewsEntry?->getUrl()
+            $lastNewsEntry?->getPublishedAt()
         );
     }
 }

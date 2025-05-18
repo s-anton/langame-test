@@ -26,18 +26,18 @@ class BulkCreateNewsEntriesUseCase
      * @return void
      * @throws ExceptionInterface
      */
-    public function execute(array $datas, ?string $lastUrl): void
+    public function execute(array $datas, ?string $lastPublishedAt): void
     {
         if (empty($datas)) {
             return;
         }
 
         $lastEntry = null;
+        $publishedAt = $lastPublishedAt !== null ? date_create($lastPublishedAt) : null;
         foreach ($datas as $data) {
-            if ($data->url === $lastUrl) {
-                break;
+            if ($publishedAt !== null && date_create($data->pubDate) <= $publishedAt) {
+                continue;
             }
-
             if ($this->newsRepository->urlExists($data->url)) {
                 return;
             }
