@@ -33,5 +33,4 @@ class SendNotificationOnUserCreated
         $message = new UserCreatedMessage($user->getId(), $user->getUsername());
         $this->mercurePublisherService->publish($message);
     }
-
 }
