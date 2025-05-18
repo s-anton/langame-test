@@ -7,6 +7,8 @@ namespace App\Tests\Support\Helper;
 use Codeception\Module;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use PHPUnit\Framework\MockObject\Generator\Generator as MockGenerator;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class UnitHelperModule extends Module
 {
@@ -43,5 +45,16 @@ class UnitHelperModule extends Module
     {
         $res = $this->grabEntityFromRepository($entity, $params);
         $this->assertNot(['True', $res instanceof $entity, "$entity with params" . json_encode($params)]);
+    }
+
+    public function createMock(string $clazz): MockObject
+    {
+        return (new MockGenerator)->testDouble(
+            $clazz,
+            true,
+            callOriginalConstructor: false,
+            callOriginalClone: false,
+            returnValueGeneration: self::generateReturnValuesForTestDoubles(),
+        );
     }
 }
